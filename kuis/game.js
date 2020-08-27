@@ -9,7 +9,9 @@ let acceptingAnswers = false;
 let score = 0;
 let questionCounter = 0;
 let availableQuesions = [];
-
+let a;
+let b = document.getElementById('model');
+let c = document.getElementById('gmbr');
 let questions = [
   {
     question: "Memegang Raket (Forehand)?",
@@ -102,6 +104,7 @@ startGame = () => {
   questionCounter = 0;
   score = 0;
   availableQuesions = [...questions];
+  a = new Array();
   getNewQuestion();
 };
 
@@ -122,7 +125,18 @@ getNewQuestion = () => {
 
   choicess.forEach(choice => {
     const number = choice.dataset["number"];
-    choice.innerHTML = "<img src='gambar/"+currentQuestion["choice" + number]+"'>" ;
+    choice.innerHTML = "<img class='gambar' src='gambar/"+currentQuestion['choice' + number]+"' style='border:1px solid black'>" ;
+  });
+  
+  a = Array.from(document.getElementsByClassName('gambar'));
+  console.log(a);
+  a.forEach(gambar => {
+    gambar.addEventListener("mouseover", p =>{
+      b.classList.remove('hoper1');
+      b.classList.add('hoper');
+      let q = p.target;
+      c.innerHTML = "<img src='"+q.src+"'>" ;
+    }); 
   });
 
   availableQuesions.splice(questionIndex, 1);
@@ -157,5 +171,11 @@ incrementScore = num => {
   score += num;
   scoreText.innerText = score;
 };
+
+function hapus() {
+  b.classList.remove('hoper');
+  b.classList.add('hoper1');
+}
+
 
 startGame();
